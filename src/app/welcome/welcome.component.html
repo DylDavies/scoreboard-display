@@ -1,0 +1,50 @@
+<div class="main">
+  <div class="container">
+    <div class="title-col">
+      <div class="title">
+        <div class="name">
+          Scoreboard Helper
+        </div>
+        <div class="credits">
+          Created By: Dylan D. (dyldavies11@gmail.com)
+        </div>
+      </div>
+  
+      <div class="projects">
+        <div class="content">
+          <div *ngIf="_projects.length == 0" class="noprojects">
+            No available projects
+          </div>
+          <mat-list *ngIf="_projects.length > 0">
+            <cdk-virtual-scroll-viewport itemSize="50">
+              <div>
+                <mat-list-item *cdkVirtualFor="let project of _projects" (click)="openProject(project.name)">
+                  <mat-icon mat-list-icon>folder</mat-icon>
+                  <div mat-line>{{project.name}}</div>
+                  <div mat-line class="typedate">{{project.type}} | Created {{project.date}}</div>
+                  <mat-divider></mat-divider>
+                </mat-list-item>
+              </div>
+            </cdk-virtual-scroll-viewport>
+          </mat-list>
+        </div>
+      </div>
+    </div>
+    <div class="create-col">
+      <div class="content">
+        <p>Create Project</p>
+        <mat-divider></mat-divider>
+        <create-project-form></create-project-form>
+      </div>
+
+      <div class="credits">
+        <p>
+          This program was created by Dylan Davies in 2022 while he was a Matric Student at Northcliff High School. This program has been designed to incorpoate both ease of use for casual users as well as all the features a more advanced user would require.
+          <br>
+          <br>
+          Thank you for using <span>Scoreboard Helper!</span> If you have any requests or suggestions for the product please contact me at <a href="mailto:dyldavies11@gmail.com">dyldavies11@gmail.com</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

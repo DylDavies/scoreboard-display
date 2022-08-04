@@ -1,0 +1,37 @@
+form.creation-form {
+    p {
+        color: white;
+        //font-weight: bold;
+        font-size: 1.2rem;
+        margin-top: 0.8rem;
+        margin-bottom: 0;
+    }
+
+    table {
+        :first-child {
+            margin-right: 6px;
+        }
+
+        td mat-form-field {
+            mat-icon {
+                color: rgb(185, 185, 185);
+            }
+        }
+    }
+
+    .submitBtn {
+        margin-right: 10px;
+    }
+}
+
+mat-form-field {
+    color: white;
+}
+
+.error {
+    p {
+        color: rgb(189, 15, 15) !important;
+        font-size: 0.6rem !important;
+        margin-left: 10px;
+    }
+}

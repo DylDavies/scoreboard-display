@@ -1,0 +1,39 @@
+.sidebar {
+    width: 15%;
+
+    padding: 0.5rem;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+
+    .title {
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .subsection {
+        padding-left: 0.8rem;
+
+        .subheader {
+            color: rgb(170, 170, 170);
+        }
+
+        button {
+            width: 90%;
+            font-family: "Montserrat", sans-serif;
+            font-weight: bold;
+
+            &:hover {
+                background-color: rgb(109, 109, 109);
+            }
+
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    .mode {
+        margin-left: 50%;
+        transform: translateX(-50%);
+        margin-top: 200%;
+    }
+}

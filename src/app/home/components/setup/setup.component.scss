@@ -1,0 +1,292 @@
+.container {
+    height: 100%;
+    background-color: rgb(36, 36, 36);
+
+    .btn {
+        z-index: 2;
+        position: fixed;
+        left: 0.5rem;
+        top: 0.5rem;
+    }
+
+    .cols {
+        display: flex;
+        flex-direction: row;
+        margin-top: 3rem;
+        height: 50%;
+
+        div {
+            padding-left: 2%;
+
+            :first-child.card {
+                border-top-right-radius: 5px;
+                border-top-left-radius: 5px;
+            }
+
+            :last-child.card {
+                border-bottom-right-radius: 5px;
+                border-bottom-left-radius: 5px;
+            }
+
+            .accordion {
+                position: relative;
+                top: 5%;
+                left: 3%;
+                
+                mat-expansion-panel {
+                    background: rgb(46, 46, 46);
+                }
+            }
+
+            .card {
+                width: 100%;
+                background-color: rgb(46, 46, 46);
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+                margin: 0;
+
+                .title {
+                    padding-top: 0.5rem;
+                    font-family: "Montserrat", sans-serif;
+                    font-size: 1.5rem;
+                }
+
+                .content {
+                    padding-top: 0.5rem;
+                    width: 100%;
+                }
+
+                &.components {
+                    height: 50%;
+                    .content {
+                        position: relative;
+                        mat-selection-list {
+                            height: 50%;
+                            width: 78%;
+                            padding-bottom: 0.5rem;
+
+                            // Scroll
+                            /* width */
+                            ::-webkit-scrollbar {
+                                width: 10px;
+                                opacity: 10%;
+                            }
+                            
+                            /* Track */
+                            ::-webkit-scrollbar-track {
+                                background: #f1f1f1;
+                                border-radius: 10px;
+                            }
+
+                            /* Handle */
+                            ::-webkit-scrollbar-thumb {
+                                background: #888;
+                                border-radius: 10px;
+                            }
+
+                            /* Handle on hover */
+                            ::-webkit-scrollbar-thumb:hover {
+                                background: #555;
+                            }
+
+                            cdk-virtual-scroll-viewport {
+                                height: 15vh;
+
+                                div {
+                                    mat-list-option {
+                                        position: relative;
+                                        .delete {
+                                            position: absolute;
+                                            top: 18%;
+                                            right: 5%;
+                                            width: 2rem;
+                                            height: 2rem;
+        
+                                            mat-icon {
+                                                font-size: 1rem;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .add {
+                            position: absolute;
+                            top: 25%;
+                            right: 5%;
+                        }
+                    }
+                }
+
+                &.editor {
+                    height: 120%;
+
+                    .content {
+                        div {
+                            mat-form-field {
+                                width: 40%;
+                            }
+
+                            :nth-child(odd) {
+                                margin-right: 1rem;
+                            }
+
+                            &.size {
+                                margin-top: 1rem;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .preview {
+                margin-top: 1.5rem;
+                width: 96%;
+                height: 180%;
+
+                .wrapper {
+                    width: 100%;
+                    height: 100%;
+                    margin-left: -3%;
+
+                    app-display {
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                    }
+                }
+            }
+        }
+
+        .col1, .col2 {
+            flex: 0 0 15%;
+        }
+
+        .col3 {
+            flex: 0 0 64%;
+        }
+    }
+}
+
+.content.scenes {
+    position: relative;
+    mat-selection-list {
+        height: 50%;
+        width: 78%;
+        padding-bottom: 0.5rem;
+
+        // Scroll
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+            opacity: 10%;
+        }
+        
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        cdk-virtual-scroll-viewport {
+            height: 15vh;
+
+            div {
+                mat-list-option {
+                    position: relative;
+                    .delete {
+                        position: absolute;
+                        top: 18%;
+                        right: 5%;
+                        width: 2rem;
+                        height: 2rem;
+
+                        mat-icon {
+                            font-size: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .add {
+        position: absolute;
+        top: 25%;
+        right: 5%;
+    }
+}
+
+.content.variables {
+    position: relative;
+    mat-list {
+        height: 50%;
+        width: 94%;
+        padding-bottom: 0.5rem;
+        margin-left: 0;
+
+        // Scroll
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+            opacity: 10%;
+        }
+        
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        cdk-virtual-scroll-viewport {
+            height: 15vh;
+
+            div {
+                mat-list-item {
+                    position: relative;
+                    .delete {
+                        position: absolute;
+                        top: 18%;
+                        right: 5%;
+                        width: 2rem;
+                        height: 2rem;
+
+                        mat-icon {
+                            font-size: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .add {
+        position: absolute;
+        top: 5%;
+        right: -8%;
+    }
+}

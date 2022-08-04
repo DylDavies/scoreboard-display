@@ -1,0 +1,55 @@
+<mat-drawer-container class="container" hasBackdrop="true">
+    <app-sidebar #sidebar></app-sidebar>
+
+    <button mat-mini-fab color="primary" class="btn" (click)="sidebar.toggleSidebar()"><mat-icon>menu</mat-icon></button>
+
+    <div class="cols">
+        <div class="col1">
+            <div class="events card">
+                <p class="title">
+                    Events
+                </p>
+                <mat-divider></mat-divider>
+                <div class="content">
+                    Content
+                </div>
+            </div>
+            <div class="variables card">
+                <p class="title">
+                    Variables
+                </p>
+                <mat-divider></mat-divider>
+                <div class="content">
+                    Content
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="scenes card">
+                <p class="title">
+                    Scene
+                </p>
+                <mat-divider></mat-divider>
+                <div class="content">
+                    Content
+                </div>
+            </div>
+            <div class="instantreplay card">
+                <p class="title">
+                    Instant Replay
+                </p>
+                <mat-divider></mat-divider>
+                <div class="content">
+                    Content
+                </div>
+            </div>
+        </div>
+        <div class="col3">
+            <div class="preview">
+                <div class="wrapper">
+                    <app-display #display [border]="true"></app-display>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-drawer-container>

@@ -1,0 +1,35 @@
+<mat-drawer #drawer mode="over" class="sidebar" [opened]="opened">
+    <p class="title">
+        Scoreboard Helper
+        <button mat-mini-fab class="btn" (click)="toggleSidebar()"><mat-icon>menu</mat-icon></button>
+    </p>
+    <mat-divider></mat-divider>
+    <div class="subsection">
+        <p class="subheader">
+            File
+        </p>
+        <button mat-flat-button (click)="saveProject()">Save Project</button>
+        <br>
+        <button mat-flat-button (click)="deleteProject()">Delete Project</button>
+        <br>
+        <button mat-flat-button (click)="closeProject()">Close Project</button>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="subsection">
+        <p class="subheader">
+            Project
+        </p>
+        <button mat-flat-button>Create Display Window</button>
+        <button mat-flat-button>Run Setup</button>
+    </div>
+    <div class="mode">
+        <mat-button-toggle-group #group="matButtonToggleGroup" [value]="getRoute()">
+            <mat-button-toggle value="edit" (click)="goTo('edit')">
+                Show
+            </mat-button-toggle>
+            <mat-button-toggle value="setup" (click)="goTo('setup')">
+                Setup
+            </mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+</mat-drawer>

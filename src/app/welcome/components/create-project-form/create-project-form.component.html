@@ -1,0 +1,45 @@
+<form class="creation-form" (ngSubmit)="createProject()" #form="ngForm">
+    <mat-form-field appearance="legacy">
+        <mat-label>Project name</mat-label>
+        <input matInput placeholder="Project Name" [(ngModel)]="projectName" name="name" #fProjectName="ngModel" required>
+        <mat-error *ngIf="fProjectName.invalid && (fProjectName.dirty || fProjectName.touched)">
+            Project name is required
+        </mat-error>
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field>
+        <mat-select name="ddlProjectType" placeholder="Project Type" [(ngModel)]="projectType" #fProjectType="ngModel" required>
+          <mat-option *ngFor="let type of types" [value]="type">{{ type }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+    <p>Working Resolution</p>
+
+    <table>
+        <td>
+            <mat-form-field appearance="legacy">
+                <mat-label>Aspect X</mat-label>
+                <input matInput type="number" min="0" max="960" placeholder="Width" [(ngModel)]="aspectRatio.x" name="width" #aspectXModel="ngModel" required>
+                <mat-error *ngIf="aspectXModel.invalid && (aspectXModel.dirty || aspectXModel.touched)">
+                    Aspect Ratio X Component is required
+                </mat-error>
+            </mat-form-field>
+        </td>
+        <td>
+            <mat-form-field appearance="legacy">
+                <mat-label>Aspect Y</mat-label>
+                <input matInput type="number" min="0" max="540" placeholder="Height" [(ngModel)]="aspectRatio.y" name="height" #aspectYModel="ngModel" required>
+                <mat-icon matSuffix>aspect_ratio</mat-icon>
+                <mat-error *ngIf="aspectYModel.invalid && (aspectYModel.dirty || aspectYModel.touched)">
+                    Aspect Ratio Y Component is required
+                </mat-error>
+            </mat-form-field>
+        </td>
+    </table>
+
+    <button mat-raised-button class="submitBtn" color="primary" [disabled]="!form.valid" type="submit">Create</button>
+    <button mat-raised-button class="clearBtn" color="accent" (click)="clearForm()">Clear</button>
+</form>

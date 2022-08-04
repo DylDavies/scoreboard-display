@@ -1,0 +1,266 @@
+<mat-drawer-container class="container" hasBackdrop="true">
+    <app-sidebar #sidebar></app-sidebar>
+
+    <button mat-mini-fab color="primary" class="btn" (click)="sidebar.toggleSidebar()"><mat-icon>menu</mat-icon></button>
+
+    <div class="cols">
+        <div class="col1">
+            <div class="general card">
+                <p class="title">
+                    General Settings
+                </p>
+                <mat-divider></mat-divider>
+                <div class="content" *ngIf="activeProject">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Project name</mat-label>
+                        <input matInput placeholder="Project Name" [(ngModel)]="activeProject.name" name="name" #fProjectName="ngModel" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Aspect X</mat-label>
+                        <input matInput type="number" min="0" max="960" placeholder="Width" [(ngModel)]="activeProject.aspectRatio.x" name="width" #aspectXModel="ngModel" required (keyup)="onKeyUp($event)">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Aspect Y</mat-label>
+                        <input matInput type="number" min="0" max="540" placeholder="Height" [(ngModel)]="activeProject.aspectRatio.y" name="height" #aspectYModel="ngModel" required (keyup)="onKeyUp($event)">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <mat-accordion class="accordion">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Scenes
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="content scenes" *ngIf="activeProject">
+                        <mat-selection-list #scenes [multiple]="false">
+                            <cdk-virtual-scroll-viewport itemSize="50">
+                                <div>
+                                    <mat-list-option *ngFor="let scene of activeProject.scenes" [value]="activeProject.scenes.indexOf(scene)" [selected]="scene == activeProject.scenes[activeScene]" (selectedChange)="selectionChangeScene()">
+                                    {{scene.name}}
+                                    <button mat-mini-fab class="delete" (click)="deleteScene(scene.name)"><mat-icon>delete</mat-icon></button>
+                                    </mat-list-option>
+                                </div>
+                            </cdk-virtual-scroll-viewport>
+                        </mat-selection-list>
+                        <button mat-mini-fab color="primary" class="add" (click)="createScene()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Scene Settings
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="content settings" *ngIf="activeProject">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Scene name</mat-label>
+                            <input matInput placeholder="Project Name" [(ngModel)]="activeProject.scenes[activeScene].name" name="name" required>
+                        </mat-form-field>
+                    </div>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Events
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="content variables" *ngIf="activeProject">
+                        <mat-list>
+                            <cdk-virtual-scroll-viewport itemSize="50">
+                                <div>
+                                    <mat-list-item *ngFor="let event of activeProject.events">
+                                    <input type="text" [value]="event.name" [(ngModel)]="event.name">
+                                    <button mat-mini-fab class="delete" (click)="deleteEvent(event.name)"><mat-icon>delete</mat-icon></button>
+                                    </mat-list-item>
+                                </div>
+                            </cdk-virtual-scroll-viewport>
+                        </mat-list>
+                        <button mat-mini-fab color="primary" class="add" (click)="createEvent()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Variables
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="content variables" *ngIf="activeProject">
+                        <mat-list>
+                            <cdk-virtual-scroll-viewport itemSize="50">
+                                <div>
+                                    <mat-list-item *ngFor="let v of activeProject.events[activeEvent].variables">
+                                    <input type="text" [value]="v.name" [(ngModel)]="v.name">
+                                    <button mat-mini-fab class="delete" (click)="deleteVariable(v.name)"><mat-icon>delete</mat-icon></button>
+                                    </mat-list-item>
+                                </div>
+                            </cdk-virtual-scroll-viewport>
+                        </mat-list>
+                        <button mat-mini-fab color="primary" class="add" (click)="createVariable()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+        <div class="col2">
+            <div class="components card">
+                <p class="title">
+                    Components
+                </p>
+                <mat-divider></mat-divider>
+                <div class="content" *ngIf="activeProject">
+                    <mat-selection-list #comps [multiple]="false">
+                        <cdk-virtual-scroll-viewport itemSize="50">
+                            <div>
+                                <mat-list-option *ngFor="let component of activeProject.scenes[activeScene].components" [value]="activeProject.scenes[activeScene].components.indexOf(component)" [selected]="activeProject.scenes[activeScene].components.indexOf(component) == 0" (selectedChange)="selectionChange()">
+                                {{component.name}}
+                                <button mat-mini-fab class="delete" (click)="deleteComponent(component.name)"><mat-icon>delete</mat-icon></button>
+                                </mat-list-option>
+                            </div>
+                        </cdk-virtual-scroll-viewport>
+                    </mat-selection-list>
+                    <button mat-mini-fab color="primary" class="add" (click)="createComponent()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="editor card">
+                <p class="title">
+                    Component Editor
+                </p>
+                <mat-divider></mat-divider>
+                <div class="content" *ngIf="activeProject">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Component name</mat-label>
+                        <input matInput placeholder="Component Name" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].name" name="name" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Component Type</mat-label>
+                        <mat-select name="ddlComponentType" placeholder="Component Type" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].type" required (selectionChange)="componentTypeChange()" *ngIf="activeComponent !== 0">
+                          <mat-option *ngFor="let type of componentTypes" [value]="type.value">{{ type.name }}</mat-option>
+                        </mat-select>
+                        <mat-select name="ddlComponentType" placeholder="Component Type" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].type" required (selectionChange)="componentTypeChange()" *ngIf="activeComponent == 0">
+                            <mat-option *ngFor="let type of componentTypesBg" [value]="type.value">{{ type.name }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div *ngIf="activeProject.scenes[activeScene].components[activeComponent].type == ECompTypes.Background">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Background Mode</mat-label>
+                            <mat-select name="ddlBackgroundMod" placeholder="Background Mode" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].background.mode" required>
+                              <mat-option *ngFor="let mode of backgroundModes" [value]="mode.value">{{ mode.name }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" *ngIf="activeProject.scenes[activeScene].components[activeComponent].background.mode == EBGMode.Color">
+                            <mat-label>Color Hex</mat-label>
+                            <input matInput placeholder="Value" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].value" name="name" required (keyup)="onKeyUp($event)">
+                            <mat-hint>Ex: #FF0000</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" *ngIf="activeProject.scenes[activeScene].components[activeComponent].background.mode == EBGMode.FileImage">
+                            <mat-label>Path</mat-label>
+                            <input matInput placeholder="Value" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].value" name="name" required (keyup)="onKeyUp($event)">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" *ngIf="activeProject.scenes[activeScene].components[activeComponent].background.mode == EBGMode.UrlImage">
+                            <mat-label>URL</mat-label>
+                            <input matInput placeholder="Value" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].value" name="name" required (keyup)="onKeyUp($event)">
+                        </mat-form-field>
+                    </div>
+                    <div *ngIf="activeProject.scenes[activeScene].components[activeComponent].type == ECompTypes.Image">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Image Mode</mat-label>
+                            <mat-select name="ddlBackgroundMod" placeholder="Component Type" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].image.mode" required>
+                              <mat-option *ngFor="let mode of imageModes" [value]="mode.value">{{ mode.name }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" *ngIf="activeProject.scenes[activeScene].components[activeComponent].image.mode == EImageMode.FileImage">
+                            <mat-label>Path</mat-label>
+                            <input matInput placeholder="Value" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].value" name="name" required (keyup)="onKeyUp($event)">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" *ngIf="activeProject.scenes[activeScene].components[activeComponent].image.mode == EImageMode.UrlImage">
+                            <mat-label>URL</mat-label>
+                            <input matInput placeholder="Value" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].value" name="name" required (keyup)="onKeyUp($event)">
+                        </mat-form-field>
+                    </div>
+                    <div *ngIf="activeProject.scenes[activeScene].components[activeComponent].type == ECompTypes.TextSolid">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Text</mat-label>
+                            <input matInput placeholder="Value" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].value" name="name" required (keyup)="onKeyUp($event)">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Font Family</mat-label>
+                            <mat-select name="fontFamily" placeholder="Family" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].text.font.family" required>
+                                <mat-option value=" ">None</mat-option>
+                                <mat-option *ngFor="let f of fonts" [value]="f"><span style="font-family: '{{f}}'">{{f}}</span></mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Size</mat-label>
+                            <input matInput type="number" min="0" placeholder="Value" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].text.font.size" name="name" required (keyup)="onKeyUp($event)">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Color Hex</mat-label>
+                            <input matInput placeholder="Value" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].text.font.color" name="name" required (keyup)="onKeyUp($event)">
+                            <mat-hint>Ex: #FF0000</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div *ngIf="activeProject.scenes[activeScene].components[activeComponent].type == ECompTypes.TextVar">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Variable</mat-label>
+                            <mat-select name="variable" placeholder="Variable" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].value" required (keyup)="onKeyUp($event)">
+                                <mat-option value=" ">None</mat-option>
+                                <mat-option *ngFor="let v of activeProject.events[activeEvent].variables" [value]="v.value">{{ v.name }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Font Family</mat-label>
+                            <mat-select name="fontFamily" placeholder="Family" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].text.font.family" required (keyup)="onKeyUp($event)">
+                                <mat-option value=" ">None</mat-option>
+                                <mat-option *ngFor="let f of fonts" [value]="f"><span style="font-family: '{{f}}'">{{f}}</span></mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Size</mat-label>
+                            <input matInput type="number" min="0" placeholder="Value" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].text.font.size" name="name" required (keyup)="onKeyUp($event)">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Color Hex</mat-label>
+                            <input matInput placeholder="Value" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].text.font.color" name="name" required (keyup)="onKeyUp($event)">
+                            <mat-hint>Ex: #FF0000</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div *ngIf="activeProject.scenes[activeScene].components[activeComponent].type == ECompTypes.Video">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Path</mat-label>
+                            <input matInput placeholder="Value" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].value" name="name" required (keyup)="onKeyUp($event)">
+                            <mat-hint>Enter the full path. E.g C:\Users\user\Downloads\image.jpg</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div *ngIf="activeProject.scenes[activeScene].components[activeComponent].type !== ECompTypes.Background && activeProject.scenes[activeScene].components[activeComponent].type !== ECompTypes.Video" class="size">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Width</mat-label>
+                            <input matInput type="number" min="0" placeholder="Width" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].size.width" name="cwidth" required (keyup)="onKeyUp($event)">
+                            <mat-hint>In px</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Height</mat-label>
+                            <input matInput type="number" min="0" placeholder="Height" [(ngModel)]="activeProject.scenes[activeScene].components[activeComponent].size.height" name="cheight" required (keyup)="onKeyUp($event)">
+                            <mat-hint>In px</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col3">
+            <div class="preview">
+                <div class="wrapper">
+                    <app-display #display [border]="true" [setupMode]="true"></app-display>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-drawer-container>

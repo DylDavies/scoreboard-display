@@ -1,0 +1,8 @@
+<div class="display-content" #displayContent [attr.style]="(backgroundComponent.style) | safeStyle" *ngIf="backgroundComponent">
+    <div>
+        <div *ngFor="let component of uiComponents" [attr.style]="(component.style) | safeStyle">
+            <p *ngIf="component.type == componentTypes.TextSolid">{{component.value}}</p>
+            <p *ngIf="component.type == componentTypes.TextVar">{{ setupMode ? component.value : ""}}</p>
+        </div>
+    </div>
+</div>
